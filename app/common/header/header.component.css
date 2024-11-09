@@ -1,0 +1,368 @@
+:root {
+  --primary-color: #2c3e50;
+  --secondary-color: #e74c3c;
+  --text-color: #333;
+  --sidebar-width: 300px;
+  --header-height: 70px;
+  --transition-speed: 0.3s;
+  --swal2-background: #ffffff;
+  --swal2-border: none;
+  --swal2-box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  --swal2-border-radius: 12px;
+  --swal2-title-color: #2c3e50;
+  --swal2-confirm-button-background: #3085d6;
+  --swal2-cancel-button-background: #d33;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  height: var(--header-height);
+  background: var(--primary-color);
+  color: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+}
+
+.header .logo h1 {
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.hamburger-menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 30px;
+  height: 25px;
+  cursor: pointer;
+  z-index: 150;
+}
+
+.bar {
+  width: 100%;
+  height: 3px;
+  background: white;
+  transition: var(--transition-speed);
+  position: relative;
+}
+
+.bar::before,
+.bar::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 3px;
+  background: white;
+  transition: var(--transition-speed);
+}
+
+.bar::before {
+  top: -8px;
+}
+
+.bar::after {
+  bottom: -8px;
+}
+
+.bar.active {
+  background: transparent;
+}
+
+.bar.active::before {
+  transform: rotate(45deg);
+  top: 0;
+}
+
+.bar.active::after {
+  transform: rotate(-45deg);
+  bottom: 0;
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-item {
+  color: white;
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  transition: background-color var(--transition-speed);
+}
+
+.nav-item:hover {
+  background-color: var(--secondary-color);
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -300px;
+  width: var(--sidebar-width);
+  height: 100vh;
+  background: white;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  transition: var(--transition-speed);
+  z-index: 1000;
+}
+
+.sidebar.active {
+  left: 0;
+}
+
+.hospital-stats {
+  display: flex;
+  justify-content: space-around;
+  padding: 20px;
+  background: #f8f9fa;
+  margin: 20px 0;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.stat-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-value {
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  padding: 15px 20px;
+  color: #2c3e50;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border-left: 4px solid transparent;
+}
+
+.menu-item:hover {
+  background-color: rgba(231, 76, 60, 0.05);
+  color: #e74c3c;
+}
+
+.menu-item i {
+  margin-right: 15px;
+  font-size: 1.2rem;
+  width: 20px;
+  text-align: center;
+  transition: color 0.3s ease;
+}
+
+.profile-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 0 auto;
+  border: 3px solid #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.avatar-image {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.hospital-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid #fff;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.hospital-avatar .avatar-image {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.hospital-name {
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.profile-info {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.profile-info h3 {
+  margin: 10px 0 5px;
+  color: var(--text-color);
+  font-size: 18px;
+}
+
+.hospital-type {
+  color: #666;
+  font-size: 14px;
+}
+
+.sidebar-header {
+  padding: 20px;
+  background: var(--secondary-color);
+  color: white;
+  text-align: center;
+}
+
+.sidebar-menu {
+  padding: 20px 0;
+}
+
+.sidebar-footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 20px;
+  border-top: 1px solid #eee;
+}
+
+.logout-btn {
+  display: flex;
+  align-items: center;
+  color: #dc3545;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.logout-btn i {
+  margin-right: 10px;
+}
+
+.logout-btn:hover {
+  opacity: 0.8;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  visibility: hidden;
+  transition: var(--transition-speed);
+  z-index: 999;
+}
+
+.overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+@media (max-width: 1024px) {
+  .nav-links {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 280px;
+  }
+
+  .header {
+    padding: 0 15px;
+  }
+
+  .header .logo h1 {
+    font-size: 1.2rem;
+  }
+}
+
+.swal2-popup {
+  font-family: 'Arial', sans-serif;
+  padding: 2em;
+}
+
+.swal2-title {
+  font-size: 1.5em !important;
+  font-weight: 600 !important;
+}
+
+.swal2-text {
+  font-size: 1.1em !important;
+}
+
+.swal2-confirm-button,
+.swal2-cancel-button {
+  font-weight: 500 !important;
+  padding: 0.8em 2em !important;
+  border-radius: 6px !important;
+}
+
+.menu-item.active {
+  background-color: rgba(231, 76, 60, 0.1);
+  color: #e74c3c;
+  border-left: 4px solid #e74c3c;
+}
+
+.menu-item.active i {
+  color: #e74c3c;
+}
+
+.hamburger-section {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.hospital-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hamburger-menu {
+  cursor: pointer;
+  padding: 10px;
+}
+
+.header {
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 60px;
+}
+
+@media (max-width: 768px) {
+  .hospital-name {
+    display: none;
+  }
+
+  .hospital-avatar {
+    width: 32px;
+    height: 32px;
+  }
+}

@@ -1,0 +1,41 @@
+<div class="container">
+    <h2>Create Blood Donation Campaign</h2>
+
+    <div class="form-container">
+        <form (ngSubmit)="createCampaign()">
+            <div class="form-group">
+                <label>Campaign Title *</label>
+                <input type="text" [(ngModel)]="campaign.title" name="title" required>
+            </div>
+
+            <div class="form-group">
+                <label>Date *</label>
+                <input type="date" [(ngModel)]="campaign.date" name="date" required>
+            </div>
+
+            <div class="form-group">
+                <label>Venue *</label>
+                <input type="text" [(ngModel)]="campaign.venue" name="venue" required>
+            </div>
+
+            <div class="form-group">
+                <label>Description</label>
+                <textarea [(ngModel)]="campaign.description" name="description" rows="4"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Campaign Image *</label>
+                <input type="file" (change)="onFileSelect($event)" accept="image/*" required>
+            </div>
+
+            <div class="button-group">
+                <button type="submit" [disabled]="loading">
+                    {{ loading ? 'Creating...' : 'Create Campaign' }}
+                </button>
+                <button type="button" class="view-button" (click)="viewCampaigns()">
+                    View Campaigns
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

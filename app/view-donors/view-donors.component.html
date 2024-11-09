@@ -1,0 +1,72 @@
+<div class="donors-container">
+    <div class="page-header">
+        <h1>View Donors</h1>
+        <div class="filter-section">
+            <select [(ngModel)]="selectedDistrict" (change)="onDistrictChange()">
+                <option value="">All Districts</option>
+                <option *ngFor="let district of districts" [value]="district">
+                    {{ district }}
+                </option>
+            </select>
+            <button class="clear-filter" *ngIf="selectedDistrict" (click)="clearFilter()">
+                <i class="fas fa-times"></i> Clear Filter
+            </button>
+        </div>
+    </div>
+
+    <div class="content-section">
+        <div class="loading-spinner" *ngIf="isLoading">
+            <div class="spinner"></div>
+            <p>Loading donors...</p>
+        </div>
+
+        <div class="table-container" *ngIf="!isLoading">
+            <div class="no-donors" *ngIf="filteredDonors.length === 0">
+                <i class="fas fa-user-times"></i>
+                <p>No donors found{{ selectedDistrict ? ' in ' + selectedDistrict : '' }}</p>
+            </div>
+
+            <table class="donors-table" *ngIf="filteredDonors.length > 0">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Blood Group</th>
+                        <th>Age</th>
+                        <th>Address</th>
+                        <th>District</th>
+                        <th>Contact</th>
+                        <th>Email</th>
+                        <th>Last Donation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let donor of filteredDonors; let i = index" [class.animate-in]="true"
+                        [style.animation-delay]="i * 0.1 + 's'">
+                        <td class="donor-name">{{ donor.name }}</td>
+                        <td>
+                            <span class="blood-group-badge"
+                                [ngClass]="{'positive': donor.bloodType.includes('+'), 'negative': donor.bloodType.includes('-')}">
+                                {{ donor.bloodType }}
+                            </span>
+                        </td>
+                        <td>{{ donor.age }}</td>
+                        <td>{{ donor.address }}</td>
+                        <td>{{ donor.district }}</td>
+                        <td>{{ donor.contactNumber }}</td>
+                        <td class="email">{{ donor.emailAddress }}</td>
+                        <td>
+                            <span [ngClass]="{
+                  'recent-donation': isRecentDonation(donor.lastDonationDate) === 'This week' || isRecentDonation(donor.lastDonationDate) === 'This month',
+                  'semi-recent-donation': isRecentDonation(donor.lastDonationDate) === 'Last 3 months',
+                  'old-donation': isRecentDonation(donor.lastDonationDate) === '6 months ago',
+                  'no-donation': !donor.lastDonationDate
+                }">
+                                {{ isRecentDonation(donor.lastDonationDate) }}
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

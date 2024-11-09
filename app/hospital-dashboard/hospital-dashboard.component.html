@@ -1,0 +1,120 @@
+<div class="container-fluid mt-4">
+    <div class="row mb-4">
+        <div class="col">
+            <h2 class="text-primary"><i class="fas fa-hospital"></i> Hospital Dashboard</h2>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card bg-primary text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Total Blood Units</h5>
+                    <h2 class="card-text">450</h2>
+                    <small>Available units in storage</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-success text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Today's Donations</h5>
+                    <h2 class="card-text">12</h2>
+                    <small>New donations today</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-warning text-dark">
+                <div class="card-body">
+                    <h5 class="card-title">Pending Requests</h5>
+                    <h2 class="card-text">8</h2>
+                    <small>Awaiting approval</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-danger text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Critical Stock</h5>
+                    <h2 class="card-text">2</h2>
+                    <small>Blood types running low</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Blood Inventory Status</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Blood Type</th>
+                                <th>Available Units</th>
+                                <th>Status</th>
+                                <th>Last Updated</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>A+</td>
+                                <td>85</td>
+                                <td><span class="badge bg-success">Normal</span></td>
+                                <td>2024-03-20 10:30</td>
+                            </tr>
+                            <tr>
+                                <td>O-</td>
+                                <td>15</td>
+                                <td><span class="badge bg-danger">Critical</span></td>
+                                <td>2024-03-20 09:45</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Recent Activities</h5>
+                </div>
+                <div class="card-body">
+                    <div class="activity-feed">
+                        <div class="alert alert-info">
+                            <small class="text-muted">10 mins ago</small>
+                            <p class="mb-0">New blood donation received - Type A+</p>
+                        </div>
+                        <div class="alert alert-warning">
+                            <small class="text-muted">30 mins ago</small>
+                            <p class="mb-0">Blood request approved for Patient #12345</p>
+                        </div>
+                        <div class="alert alert-success">
+                            <small class="text-muted">1 hour ago</small>
+                            <p class="mb-0">Inventory check completed</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <button class="btn btn-primary me-2">
+                <i class="fas fa-plus"></i> New Donation
+            </button>
+            <button class="btn btn-success me-2">
+                <i class="fas fa-clipboard-list"></i> Manage Requests
+            </button>
+            <button class="btn btn-info me-2">
+                <i class="fas fa-download"></i> Generate Report
+            </button>
+        </div>
+    </div>
+</div>

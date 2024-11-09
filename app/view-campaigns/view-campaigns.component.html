@@ -1,0 +1,162 @@
+<div class="container">
+    <div class="header">
+        <h2>Blood Donation Campaigns</h2>
+        <button class="back-button" (click)="goBack()">Back to Create</button>
+    </div>
+
+    <div class="tabs">
+        <button class="tab-button" [class.active]="activeTab === 'my'" (click)="setActiveTab('my')">
+            <i class="fas fa-hospital"></i> My Campaigns
+            <span class="campaign-count">{{ myCampaigns.length }}</span>
+        </button>
+        <button class="tab-button" [class.active]="activeTab === 'other'" (click)="setActiveTab('other')">
+            <i class="fas fa-globe"></i> Other Campaigns
+            <span class="campaign-count">{{ otherCampaigns.length }}</span>
+        </button>
+    </div>
+
+    <div class="campaign-section" *ngIf="activeTab === 'my'">
+        <div class="section-header">
+            <h3>My Hospital's Campaigns</h3>
+            <p *ngIf="myCampaigns.length === 0" class="no-campaigns">
+                You haven't created any campaigns yet.
+            </p>
+        </div>
+        <div class="campaign-grid">
+            <div class="campaign-card" *ngFor="let camp of myCampaigns">
+                <div class="campaign-image">
+                    <img [src]="'http://localhost:8080' + camp.imagePath" alt="Campaign image">
+                    <div class="campaign-badge">Active</div>
+                </div>
+                <div class="campaign-details">
+                    <h4>{{ camp.title }}</h4>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <i class="fas fa-calendar"></i>
+                            <span><strong>Date:</strong> {{ camp.date | date:'mediumDate' }}</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span><strong>Venue:</strong> {{ camp.venue }}</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-clock"></i>
+                            <span><strong>Time:</strong> 9:00 AM - 5:00 PM</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-users"></i>
+                            <span><strong>Expected Donors:</strong> 50+</span>
+                        </div>
+                    </div>
+                    <div class="description-box">
+                        <h5>Campaign Details</h5>
+                        <p class="description">{{ camp.description }}</p>
+                    </div>
+                    <div class="campaign-footer">
+                        <div class="organizer">
+                            <strong>Organized by:</strong> {{ camp.hospitalName }}
+                        </div>
+                        <div class="contact">
+                            <strong>Contact:</strong> {{ camp.contactNumber }}
+                        </div>
+                    </div>
+                    <div class="share-icon">
+                        <i class="fas fa-share-alt" title="Share Campaign"></i>
+                    </div>
+                    <div class="action-icons">
+                        <div class="edit-icon" (click)="updateCampaign(camp)">
+                            <i class="fas fa-edit" title="Edit Campaign"></i>
+                        </div>
+                        <div class="delete-icon" (click)="deleteCampaign(camp.id)">
+                            <i class="fas fa-trash-alt" title="Delete Campaign"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="campaign-section" *ngIf="activeTab === 'other'">
+        <div class="section-header">
+            <h3>Other Hospital Campaigns</h3>
+            <p *ngIf="otherCampaigns.length === 0" class="no-campaigns">
+                No campaigns available from other hospitals.
+            </p>
+        </div>
+        <div class="campaign-grid">
+            <div class="campaign-card" *ngFor="let camp of otherCampaigns">
+                <div class="campaign-image">
+                    <img [src]="'http://localhost:8080' + camp.imagePath" alt="Campaign image">
+                    <div class="campaign-badge">Active</div>
+                </div>
+                <div class="campaign-details">
+                    <h4>{{ camp.title }}</h4>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <i class="fas fa-calendar"></i>
+                            <span><strong>Date:</strong> {{ camp.date | date:'mediumDate' }}</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span><strong>Venue:</strong> {{ camp.venue }}</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-clock"></i>
+                            <span><strong>Time:</strong> 9:00 AM - 5:00 PM</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-users"></i>
+                            <span><strong>Expected Donors:</strong> 50+</span>
+                        </div>
+                    </div>
+                    <div class="description-box">
+                        <h5>Campaign Details</h5>
+                        <p class="description">{{ camp.description }}</p>
+                    </div>
+                    <div class="campaign-footer">
+                        <div class="organizer">
+                            <strong>Organized by:</strong> {{ camp.hospitalName }}
+                        </div>
+                        <div class="contact">
+                            <strong>Contact:</strong> {{ camp.contactNumber }}
+                        </div>
+                    </div>
+                    <div class="share-icon">
+                        <i class="fas fa-share-alt" title="Share Campaign"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" [class.show-modal]="showUpdateModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Update Campaign</h3>
+            <span class="close-button" (click)="closeUpdateModal()">&times;</span>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label>Title</label>
+                <input type="text" [(ngModel)]="selectedCampaign.title" class="form-input">
+            </div>
+            <div class="form-group">
+                <label>Date</label>
+                <input type="date" [(ngModel)]="selectedCampaign.date" class="form-input">
+            </div>
+            <div class="form-group">
+                <label>Venue</label>
+                <input type="text" [(ngModel)]="selectedCampaign.venue" class="form-input">
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <textarea [(ngModel)]="selectedCampaign.description" class="form-input" rows="4"></textarea>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="cancel-button" (click)="closeUpdateModal()">Cancel</button>
+            <button class="save-button" (click)="saveUpdate()">Save Changes</button>
+        </div>
+    </div>
+</div>

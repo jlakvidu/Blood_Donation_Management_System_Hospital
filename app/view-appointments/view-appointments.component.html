@@ -1,0 +1,65 @@
+<div class="appointments-container">
+    <h2>Appointments</h2>
+
+    <div class="loading-spinner" *ngIf="isLoading">
+        <div class="spinner"></div>
+        <p>Loading appointments...</p>
+    </div>
+
+    <div class="error-message" *ngIf="error">
+        {{ error }}
+    </div>
+
+    <div class="no-appointments" *ngIf="!isLoading && !error && appointments.length === 0">
+        <i class="fas fa-calendar-times"></i>
+        <p>No appointments found</p>
+    </div>
+
+    <div class="appointments-list" *ngIf="!isLoading && !error && appointments.length > 0">
+        <div class="appointment-card" *ngFor="let appointment of appointments">
+            <div class="appointment-header">
+                <h3>{{ appointment.patientName }}</h3>
+                <span class="status-badge" [ngClass]="appointment.status.toLowerCase()">
+                    {{ appointment.status }}
+                </span>
+            </div>
+
+            <div class="appointment-details">
+                <p>
+                    <i class="fas fa-calendar"></i>
+                    {{ appointment.appointmentDateTime | date:'medium' }}
+                </p>
+                <p>
+                    <i class="fas fa-clock"></i>
+                    Created: {{ appointment.createdAt | date:'medium' }}
+                </p>
+                <p>
+                    <i class="fas fa-tint"></i>
+                    Blood Type: {{ appointment.bloodType }}
+                </p>
+                <p>
+                    <i class="fas fa-phone"></i>
+                    Contact: {{ appointment.contactNumber }}
+                </p>
+                <p>
+                    <i class="fas fa-envelope"></i>
+                    Email: {{ appointment.emailAddress }}
+                </p>
+            </div>
+
+            <div class="appointment-actions">
+                <button class="confirm-btn" (click)="updateStatus(appointment.id, 'CONFIRMED')"
+                    *ngIf="appointment.status === 'PENDING'">
+                    <i class="fas fa-check"></i> Confirm
+                </button>
+                <button class="cancel-btn" (click)="updateStatus(appointment.id, 'CANCELLED')"
+                    *ngIf="appointment.status === 'PENDING'">
+                    <i class="fas fa-times"></i> Cancel
+                </button>
+                <button class="delete-btn" (click)="deleteAppointment(appointment.id)">
+                    <i class="fas fa-trash"></i> Delete
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

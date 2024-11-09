@@ -1,0 +1,250 @@
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #e74c3c;
+    --text-color: #333;
+    --sidebar-width: 300px;
+    --header-height: 70px;
+    --transition-speed: 0.3s;
+  }
+  
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    height: var(--header-height);
+    background: var(--primary-color);
+    color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+  }
+  
+  .header .logo h1 {
+    font-size: 1.5rem;
+    margin: 0;
+  }
+  
+  .hamburger-menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 25px;
+    cursor: pointer;
+    z-index: 150;
+  }
+  
+  .bar {
+    width: 100%;
+    height: 3px;
+    background: white;
+    transition: var(--transition-speed);
+    position: relative;
+  }
+  
+  .bar::before,
+  .bar::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    background: white;
+    transition: var(--transition-speed);
+  }
+  
+  .bar::before {
+    top: -8px;
+  }
+  
+  .bar::after {
+    bottom: -8px;
+  }
+  
+  .bar.active {
+    background: transparent;
+  }
+  
+  .bar.active::before {
+    transform: rotate(45deg);
+    top: 0;
+  }
+  
+  .bar.active::after {
+    transform: rotate(-45deg);
+    bottom: 0;
+  }
+  
+  .nav-links {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .nav-item {
+    color: white;
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: background-color var(--transition-speed);
+  }
+  
+  .nav-item:hover {
+    background-color: var(--secondary-color);
+  }
+  
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: -300px;
+    width: var(--sidebar-width);
+    height: 100vh;
+    background: white;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    transition: var(--transition-speed);
+    z-index: 1000;
+  }
+  
+  .sidebar.active {
+    left: 0;
+  }
+  
+  .hospital-stats {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+    background: #f8f9fa;
+    margin: 20px 0;
+  }
+  
+  .stat-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .stat-details {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .stat-value {
+    font-weight: bold;
+    color: var(--primary-color);
+  }
+  
+  .stat-label {
+    font-size: 0.8rem;
+    color: #666;
+  }
+  
+  .menu-item {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    color: var(--text-color);
+    text-decoration: none;
+    transition: var(--transition-speed);
+  }
+  
+  .menu-item:hover {
+    background-color: #f8f9fa;
+  }
+  
+  .menu-item i {
+    margin-right: 10px;
+    width: 20px;
+    text-align: center;
+  }
+  
+  .profile-image {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto 10px;
+  }
+  
+  .profile-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .sidebar-header {
+    padding: 20px;
+    background: var(--secondary-color);
+    color: white;
+    text-align: center;
+  }
+  
+  .sidebar-menu {
+    padding: 20px 0;
+  }
+  
+  .sidebar-footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 20px;
+    border-top: 1px solid #eee;
+  }
+  
+  .logout-btn {
+    display: flex;
+    align-items: center;
+    color: #dc3545;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+  .logout-btn i {
+    margin-right: 10px;
+  }
+  
+  .logout-btn:hover {
+    opacity: 0.8;
+  }
+  
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transition-speed);
+    z-index: 999;
+  }
+  
+  .overlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  @media (max-width: 1024px) {
+    .nav-links {
+      display: none;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .sidebar {
+      width: 280px;
+    }
+  
+    .header {
+      padding: 0 15px;
+    }
+  
+    .header .logo h1 {
+      font-size: 1.2rem;
+    }
+  }
+  
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

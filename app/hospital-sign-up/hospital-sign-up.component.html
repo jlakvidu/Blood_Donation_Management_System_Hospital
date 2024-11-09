@@ -1,0 +1,157 @@
+<div class="signup-container">
+    <div class="image-section">
+        <img src="assets/images/hospital-signup.jpg" alt="Hospital Registration">
+        <div class="overlay">
+            <i class="fas fa-hospital-user"></i>
+            <h2>Welcome to Blood Bank Management System</h2>
+            <p>Join our network of healthcare providers</p>
+        </div>
+    </div>
+
+    <div class="form-section">
+        <div class="form-container">
+            <h1>Hospital Registration</h1>
+            <p class="subtitle">Create an account to manage your blood bank</p>
+
+            <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+                <div class="form-group">
+                    <h3><i class="fas fa-hospital"></i> Basic Information</h3>
+                    <div class="input-group">
+                        <input type="text" formControlName="name" placeholder="Hospital Name">
+                        <div class="error-message" *ngIf="isFieldInvalid('name')">
+                            Hospital name is required
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <input type="text" formControlName="registrationNumber" placeholder="Registration Number">
+                        <div class="error-message" *ngIf="isFieldInvalid('registrationNumber')">
+                            Registration number is required
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <select formControlName="type">
+                            <option value="">Select Hospital Type</option>
+                            <option value="Government">Government Hospital</option>
+                            <option value="Private">Private Hospital</option>
+                            <option value="Specialty">Specialty Hospital</option>
+                        </select>
+                        <div class="error-message" *ngIf="isFieldInvalid('type')">
+                            Hospital type is required
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <h3><i class="fas fa-address-card"></i> Contact Information</h3>
+                    <div class="input-group">
+                        <input type="email" formControlName="emailAddress" placeholder="Email Address">
+                        <div class="error-message" *ngIf="isFieldInvalid('emailAddress')">
+                            Valid email is required
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <input type="tel" formControlName="contactNumber" placeholder="Contact Number">
+                        <div class="error-message" *ngIf="isFieldInvalid('contactNumber')">
+                            {{ getErrorMessage('contactNumber') }}
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <textarea formControlName="address" placeholder="Hospital Address"></textarea>
+                        <div class="error-message" *ngIf="isFieldInvalid('address')">
+                            Address is required
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <select formControlName="district">
+                            <option value="">Select District</option>
+                            <option *ngFor="let district of districts" [value]="district">
+                                {{district}}
+                            </option>
+                        </select>
+                        <div class="error-message" *ngIf="isFieldInvalid('district')">
+                            District is required
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <h3><i class="fas fa-tint"></i> Blood Bank Information</h3>
+                    <div class="input-group">
+                        <input type="text" formControlName="bloodBankLicenseNumber"
+                            placeholder="Blood Bank License Number">
+                    </div>
+
+                    <div class="input-group">
+                        <input type="number" formControlName="bloodBankCapacity"
+                            placeholder="Blood Bank Capacity (units)">
+                    </div>
+
+                    <div class="input-group">
+                        <input type="text" formControlName="operatingDaysAndHours"
+                            placeholder="Operating Days and Hours">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <h3><i class="fas fa-info-circle"></i> Additional Information</h3>
+                    <div class="input-group">
+                        <textarea formControlName="specialInstructions"
+                            placeholder="Special Instructions or Additional Information"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <h3><i class="fas fa-image"></i> Profile Image</h3>
+                    <div class="input-group">
+                        <input type="file" (change)="onFileSelected($event)" accept="image/*" class="form-control">
+                    </div>
+                    <div class="image-preview" *ngIf="imagePreview">
+                        <img [src]="imagePreview" alt="Preview">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <h3><i class="fas fa-lock"></i> Security Information</h3>
+                    <div class="input-group">
+                        <div class="password-input">
+                            <input [type]="showPassword ? 'text' : 'password'" formControlName="password"
+                                placeholder="Password">
+                            <i class="fas" [class.fa-eye]="!showPassword" [class.fa-eye-slash]="showPassword"
+                                (click)="togglePasswordVisibility('password')"></i>
+                        </div>
+                        <div class="error-message" *ngIf="isFieldInvalid('password')">
+                            {{ getErrorMessage('password') }}
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <div class="password-input">
+                            <input type="password" formControlName="confirmPassword" placeholder="Confirm Password">
+                        </div>
+                        <div class="error-message" *ngIf="signupForm.errors?.['passwordMismatch']">
+                            Passwords do not match
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" [disabled]="!isAllFieldsFilled() || !signupForm.valid || isLoading"
+                        [class.disabled]="!isAllFieldsFilled() || !signupForm.valid || isLoading">
+                        <i class="fas fa-hospital-user"></i>
+                        {{ isLoading ? 'Registering...' : 'Register Hospital' }}
+                    </button>
+                </div>
+
+                <p class="login-link">
+                    Already registered?
+                    <a (click)="navigateToSignIn($event)" style="cursor: pointer; color: #e74c3c;">Sign In</a>
+                </p>
+            </form>
+        </div>
+    </div>
+</div>

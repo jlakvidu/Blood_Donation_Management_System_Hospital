@@ -1,0 +1,69 @@
+<div class="page-title">
+    <h1>Emergency Blood Request</h1>
+  </div>
+  
+  <div class="emergency-container">
+    <div class="header">
+      <h2>Post New Request</h2>
+      <p class="subtitle">Post urgent blood requirement details</p>
+    </div>
+  
+    <form (ngSubmit)="submitRequest()" class="emergency-form">
+      <input type="hidden" [(ngModel)]="emergencyRequest.district" name="district">
+  
+      <div class="form-group">
+        <label>Patient Name *</label>
+        <input type="text" [(ngModel)]="emergencyRequest.patientName" name="patientName" required>
+      </div>
+  
+      <div class="form-row">
+        <div class="form-group">
+          <label>Blood Type Needed *</label>
+          <select [(ngModel)]="emergencyRequest.bloodType" name="bloodType" required>
+            <option value="">Select Blood Type</option>
+            <option *ngFor="let type of bloodTypes" [value]="type">{{type}}</option>
+          </select>
+        </div>
+  
+        <div class="form-group">
+          <label>Units Needed *</label>
+          <input type="number" [(ngModel)]="emergencyRequest.unitsNeeded" name="unitsNeeded" required min="1">
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label>Hospital Name *</label>
+        <input type="text" [(ngModel)]="emergencyRequest.hospital" name="hospital" required>
+      </div>
+  
+      <div class="form-group">
+        <label>Contact Number *</label>
+        <input type="tel" [(ngModel)]="emergencyRequest.contactNumber" name="contactNumber" required>
+      </div>
+  
+      <div class="form-group">
+        <label>Urgency Level *</label>
+        <select [(ngModel)]="emergencyRequest.urgencyLevel" name="urgencyLevel" required>
+          <option value="">Select Urgency Level</option>
+          <option value="CRITICAL">Critical - Needed within hours</option>
+          <option value="URGENT">Urgent - Needed within 24 hours</option>
+          <option value="MODERATE">Moderate - Needed within 48 hours</option>
+        </select>
+      </div>
+  
+      <div class="form-group">
+        <label>Additional Details</label>
+        <textarea [(ngModel)]="emergencyRequest.description" name="description" rows="4" 
+                  placeholder="Enter any additional information about the requirement..."></textarea>
+      </div>
+  
+      <div class="form-actions">
+        <button type="button" (click)="resetForm()" class="reset-button">Reset</button>
+        <button type="submit" class="submit-button">Post Emergency Request</button>
+        <button type="button" class="view-requests-button" (click)="viewEmergencyRequests()">
+          <i class="fas fa-list"></i> View Emergency Requests
+        </button>
+      </div>
+    </form>
+  </div>
+  

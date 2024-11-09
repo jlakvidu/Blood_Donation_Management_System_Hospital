@@ -1,0 +1,120 @@
+<div class="login-container">
+  <div class="image-section">
+    <img src="assets/images/blood-donation.jpg" alt="Blood Donation" class="login-image">
+    <div class="image-overlay">
+      <h2 class="overlay-text">Welcome to Blood Bank</h2>
+      <p class="overlay-description">Your contribution can save lives. Login to continue your noble cause.</p>
+    </div>
+  </div>
+
+  <div class="login-form-section">
+    <div class="form-header">
+      <div class="logo">
+        <img src="assets/images/logo.png" alt="Logo">
+      </div>
+      <h1 class="title">Sign In</h1>
+      <p class="subtitle">Please login to your account</p>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+      <div class="form-group">
+        <div class="input-group">
+          <i class="fas fa-envelope input-icon"></i>
+          <input type="email" formControlName="emailAddress" placeholder="Email Address" class="form-control"
+            [class.is-invalid]="isFieldInvalid('emailAddress')">
+        </div>
+        <div class="error-message" *ngIf="isFieldInvalid('emailAddress')">
+          <span *ngIf="loginForm.get('emailAddress')?.errors?.['required']">Email is required</span>
+          <span *ngIf="loginForm.get('emailAddress')?.errors?.['email']">Please enter a valid email</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="input-group">
+          <i class="fas fa-lock input-icon"></i>
+          <input [type]="showPassword ? 'text' : 'password'" formControlName="password" placeholder="Password"
+            class="form-control" [class.is-invalid]="isFieldInvalid('password')">
+          <i class="fas password-toggle" [class.fa-eye]="!showPassword" [class.fa-eye-slash]="showPassword"
+            (click)="togglePasswordVisibility()"></i>
+        </div>
+        <div class="error-message" *ngIf="isFieldInvalid('password')">
+          Password is required
+        </div>
+      </div>
+
+      <div class="form-options">
+        <label class="remember-me">
+          <input type="checkbox" formControlName="rememberMe">
+          <span class="checkbox-label">Remember me</span>
+        </label>
+        <a href="#" class="forgot-password" (click)="toggleForgotPassword($event)">Forgot Password?</a>
+      </div>
+
+      <div class="error-message login-error" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </div>
+
+      <button type="submit" class="login-btn" [disabled]="loginForm.invalid || isLoading"
+        [class.disabled]="loginForm.invalid || isLoading">
+        <span *ngIf="!isLoading">Sign In</span>
+        <div class="spinner" *ngIf="isLoading">
+          <div class="bounce1"></div>
+          <div class="bounce2"></div>
+          <div class="bounce3"></div>
+        </div>
+      </button>
+
+      <div class="register-link">
+        Don't have an account? <a routerLink="/hospital-sign-up">Register now</a>
+      </div>
+    </form>
+  </div>
+
+  <div class="forgot-password-overlay" *ngIf="showForgotPassword">
+    <div class="forgot-password-modal">
+      <div class="modal-header">
+        <h3>Reset Password</h3>
+        <button class="close-btn" (click)="toggleForgotPassword($event)">&times;</button>
+      </div>
+
+      <div class="modal-body" *ngIf="!showOTPInput && !showNewPassword">
+        <div class="form-group">
+          <div class="input-group">
+            <i class="fas fa-envelope input-icon"></i>
+            <input type="email" [(ngModel)]="resetEmail" placeholder="Enter your email" class="form-control">
+          </div>
+        </div>
+        <button class="login-btn" (click)="requestPasswordReset()">
+          <span *ngIf="!isLoading">Send OTP</span>
+          <div class="spinner" *ngIf="isLoading">
+            <div class="bounce1"></div>
+            <div class="bounce2"></div>
+            <div class="bounce3"></div>
+          </div>
+        </button>
+      </div>
+
+      <div class="modal-body" *ngIf="showOTPInput">
+        <div class="form-group">
+          <div class="input-group">
+            <i class="fas fa-key input-icon"></i>
+            <input type="text" [(ngModel)]="otp" placeholder="Enter OTP" class="form-control">
+          </div>
+        </div>
+        <button class="login-btn" (click)="verifyOTP()">Verify OTP</button>
+      </div>
+
+      <div class="modal-body" *ngIf="showNewPassword">
+        <div class="form-group">
+          <div class="input-group">
+            <i class="fas fa-lock input-icon"></i>
+            <input type="password" [(ngModel)]="newPassword" placeholder="Enter new password" class="form-control">
+            <i class="fas password-toggle" [class.fa-eye]="!showPassword" [class.fa-eye-slash]="showPassword"
+              (click)="togglePasswordVisibility()"></i>
+          </div>
+        </div>
+        <button class="login-btn" (click)="resetPassword()">Reset Password</button>
+      </div>
+    </div>
+  </div>
+</div>

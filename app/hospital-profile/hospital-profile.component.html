@@ -1,0 +1,177 @@
+<div class="profile-container">
+  <div *ngIf="isLoading || isUpdating" class="loading-spinner">
+    <div class="spinner"></div>
+    <p>Loading...</p>
+  </div>
+
+  <div *ngIf="!isLoading && !isUpdating" class="profile-content">
+    <div class="profile-header">
+      <div class="header-content">
+        <div class="hospital-avatar" (click)="fileInput.click()">
+          <input #fileInput type="file" accept="image/*" style="display: none;" (change)="onFileSelected($event)">
+          <div class="avatar-image"
+            [style.backgroundImage]="hospitalData.profileImagePath ? 'url(' + apiUrl + hospitalData.profileImagePath + ')' : 'url(/assets/images/default-hospital.jpg)'"
+            (error)="handleImageError($event)">
+          </div>
+          <div class="edit-avatar">
+            <i class="fas fa-camera"></i>
+            <span>Change Photo</span>
+          </div>
+        </div>
+        <div class="hospital-info">
+          <h1>{{ hospitalData.name }}</h1>
+          <span class="type-badge">{{ hospitalData.type }}</span>
+        </div>
+        <button class="edit-button" (click)="toggleModal()">
+          <i class="fas fa-pencil-alt"></i> Edit Profile
+        </button>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2><i class="fas fa-info-circle"></i> Basic Information</h2>
+      <div class="info-grid">
+        <div class="info-item">
+          <i class="fas fa-hospital-user"></i>
+          <label>Registration Number</label>
+          <p>{{ hospitalData.registrationNumber }}</p>
+        </div>
+        <div class="info-item">
+          <i class="fas fa-certificate"></i>
+          <label>Blood Bank License</label>
+          <p>{{ hospitalData.bloodBankLicenseNumber }}</p>
+        </div>
+        <div class="info-item">
+          <i class="fas fa-envelope"></i>
+          <label>Email Address</label>
+          <p>{{ hospitalData.emailAddress }}</p>
+        </div>
+        <div class="info-item">
+          <i class="fas fa-phone-alt"></i>
+          <label>Contact Number</label>
+          <p>{{ hospitalData.contactNumber }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2><i class="fas fa-tint"></i> Blood Bank Details</h2>
+      <div class="info-grid">
+        <div class="info-item">
+          <label>Blood Bank Capacity</label>
+          <p>{{ hospitalData.bloodBankCapacity }} units</p>
+        </div>
+        <div class="info-item">
+          <label>Operating Hours</label>
+          <p>{{ hospitalData.operatingDaysAndHours }}</p>
+        </div>
+      </div>
+
+      <div class="blood-availability">
+        <h3><i class="fas fa-chart-pie"></i> Blood Group Availability</h3>
+        <div class="blood-groups">
+          <div class="blood-group-item" *ngFor="let group of bloodGroups">
+            <i class="fas fa-tint"></i>
+            <span class="blood-type">{{ group.type }}</span>
+            <span class="blood-units">{{ group.units }} units</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2><i class="fas fa-map-marker-alt"></i> Location & Contact</h2>
+      <div class="address-box">
+        <i class="fas fa-map-marker-alt"></i>
+        <p>{{ hospitalData.address }}</p>
+      </div>
+      <p class="district"><i class="fas fa-map"></i> District: {{ hospitalData.district }}</p>
+    </div>
+
+    <div class="section">
+      <h2><i class="fas fa-exclamation-circle"></i> Special Instructions</h2>
+      <div class="instructions-box">
+        <p>{{ hospitalData.specialInstructions }}</p>
+      </div>
+    </div>
+
+    <div class="section danger-zone">
+      <h2><i class="fas fa-exclamation-triangle"></i> Danger Zone</h2>
+      <button class="delete-button" (click)="deleteHospitalById(hospitalData.id)">
+        <i class="fas fa-trash"></i> Delete Account
+      </button>
+    </div>
+
+    <ng-container *ngIf="showModal">
+      <div class="modal-overlay" (click)="toggleModal()"></div>
+      <div class="modal-content">
+        <h2><i class="fas fa-edit"></i> Edit Hospital Profile</h2>
+        <div class="modal-form">
+          <div class="form-grid">
+            <div class="form-group">
+              <label>ID</label>
+              <input type="text" [value]="hospitalData.id" class="form-control" readonly disabled />
+            </div>
+            <div class="form-group">
+              <label>Email Address</label>
+              <input type="text" [value]="hospitalData.emailAddress" class="form-control" readonly disabled />
+            </div>
+
+            <div class="form-group">
+              <label>Hospital Name</label>
+              <input [(ngModel)]="hospitalData.name" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label>Registration Number</label>
+              <input [(ngModel)]="hospitalData.registrationNumber" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label>Type</label>
+              <input [(ngModel)]="hospitalData.type" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label>District</label>
+              <input [(ngModel)]="hospitalData.district" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label>Address</label>
+              <textarea [(ngModel)]="hospitalData.address" class="form-control"></textarea>
+            </div>
+            <div class="form-group">
+              <label>Contact Number</label>
+              <input [(ngModel)]="hospitalData.contactNumber" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label>Blood Bank License Number</label>
+              <input [(ngModel)]="hospitalData.bloodBankLicenseNumber" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label>Blood Bank Capacity</label>
+              <input [(ngModel)]="hospitalData.bloodBankCapacity" class="form-control" type="number" min="0"
+                [ngClass]="{'low-capacity': parseInt(hospitalData.bloodBankCapacity) < 20}" />
+              <small class="warning-text" *ngIf="parseInt(hospitalData.bloodBankCapacity) < 20">
+                Low capacity! Donors will be notified.
+              </small>
+            </div>
+            <div class="form-group">
+              <label>Operating Days and Hours</label>
+              <input [(ngModel)]="hospitalData.operatingDaysAndHours" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label>Special Instructions</label>
+              <textarea [(ngModel)]="hospitalData.specialInstructions" class="form-control"></textarea>
+            </div>
+          </div>
+          <div class="modal-actions">
+            <button class="cancel-button" (click)="toggleModal()">
+              <i class="fas fa-times"></i> Cancel
+            </button>
+            <button class="save-button" (click)="updateHospital()">
+              <i class="fas fa-save"></i> Save Changes
+            </button>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>

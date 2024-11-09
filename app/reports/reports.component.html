@@ -1,0 +1,50 @@
+<div class="reports-container">
+    <div class="reports-header">
+      <div class="header-content">
+        <div class="header-text">
+          <h1>Analytics & Reports</h1>
+          <p class="subtitle">Comprehensive blood donation system analytics and reporting dashboard</p>
+        </div>
+        <div class="header-stats">
+          <div class="stat-card">
+            <span class="stat-number">2,458</span>
+            <span class="stat-label">Total Donations</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number">847</span>
+            <span class="stat-label">Active Donors</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number">156</span>
+            <span class="stat-label">This Month</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="reports-grid">
+      <mat-card class="report-card" *ngFor="let report of reports" [class.mat-elevation-z3]="true">
+        <div class="card-accent" [style.background-color]="report.color"></div>
+        <mat-card-header>
+          <div class="icon-container" [style.background-color]="report.color + '15'">
+            <mat-icon [style.color]="report.color">{{report.icon}}</mat-icon>
+          </div>
+          <mat-card-title>{{report.title}}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>{{report.description}}</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-flat-button [style.background-color]="report.color" class="generate-btn" (click)="generateReport(report)">
+            <mat-icon>description</mat-icon>
+            Generate Report
+          </button>
+          <button mat-stroked-button (click)="viewHistory(report)">
+            <mat-icon>history</mat-icon>
+            History
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+  

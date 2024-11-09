@@ -1,0 +1,94 @@
+<header class="header">
+    <div class="hamburger-section">
+        <div class="hamburger-menu" (click)="toggleSidebar()">
+            <div class="bar" [class.active]="isSidebarOpen"></div>
+        </div>
+        <div class="hospital-info" *ngIf="hospitalData.name">
+            <div class="hospital-avatar">
+                <div class="avatar-image"
+                    [style.backgroundImage]="hospitalData.profileImagePath ? 'url(' + apiUrl + hospitalData.profileImagePath + ')' : 'url(/assets/images/default-hospital.jpg)'"
+                    (error)="handleImageError($event)">
+                </div>
+            </div>
+            <span class="hospital-name">{{ hospitalData.name }}</span>
+        </div>
+    </div>
+
+    <div class="logo">
+        <h1>Hospital Blood Bank Management</h1>
+    </div>
+
+    <nav class="nav-links">
+        <a href="#" routerLink="" class="nav-item">Dashboard</a>
+        <a href="#" routerLink="blood-inventory" class="nav-item">Blood Inventory</a>
+        <a href="#" routerLink="emerganzy" class="nav-item">Emerganzy</a>
+        <a href="#" routerLink="view-donors" class="nav-item">Donors</a>
+        <a href="#" routerLink="campaigns" class="nav-item">Campaigns</a>
+        <a href="#" routerLink="reports" class="nav-item">Reports</a>
+        <a href="#" routerLink="view-appointments" class="nav-item">View Appointments</a>
+    </nav>
+</header>
+
+<div class="sidebar" [class.active]="isSidebarOpen">
+    <div class="sidebar-header">
+        <div class="profile-image">
+            <div class="avatar-image"
+                [style.backgroundImage]="hospitalData.profileImagePath ? 'url(' + apiUrl + hospitalData.profileImagePath + ')' : 'url(/assets/images/default-hospital.jpg)'"
+                (error)="handleImageError($event)">
+            </div>
+        </div>
+        <div class="profile-info">
+            <h3>{{ hospitalData.name }}</h3>
+            <span class="hospital-type">{{ hospitalData.type }}</span>
+        </div>
+    </div>
+
+    <div class="hospital-stats">
+        <div class="stat-item">
+            <i class="fas fa-tint"></i>
+            <div class="stat-details">
+                <span class="stat-value">{{ bloodUnits }}</span>
+                <span class="stat-label">Blood Units</span>
+            </div>
+        </div>
+        <div class="stat-item">
+            <i class="fas fa-user-md"></i>
+            <div class="stat-details">
+                <span class="stat-value">{{ staffMembers }}</span>
+                <span class="stat-label">Staff Members</span>
+            </div>
+        </div>
+    </div>
+
+    <nav class="sidebar-menu">
+        <a routerLink="/hospital-profile" routerLinkActive="active" class="menu-item" (click)="toggleSidebar()">
+            <i class="fas fa-hospital"></i>
+            <span>Hospital Profile</span>
+        </a>
+        <a href="#" class="menu-item">
+            <i class="fas fa-clipboard-list"></i>
+            <span>Blood Inventory</span>
+        </a>
+        <a href="#" class="menu-item">
+            <i class="fas fa-procedures"></i>
+            <span>Patient Requests</span>
+        </a>
+        <a href="#" class="menu-item">
+            <i class="fas fa-chart-bar"></i>
+            <span>Analytics</span>
+        </a>
+        <a href="#" routerLink="/settings" class="menu-item">
+            <i class="fas fa-cog"></i>
+            <span>Settings</span>
+        </a>
+    </nav>
+
+    <div class="sidebar-footer">
+        <a (click)="logout()" class="logout-btn">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Logout</span>
+        </a>
+    </div>
+</div>
+
+<div class="overlay" [class.active]="isSidebarOpen" (click)="toggleSidebar()"></div>

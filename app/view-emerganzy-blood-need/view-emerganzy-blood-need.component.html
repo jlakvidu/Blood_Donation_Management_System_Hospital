@@ -1,0 +1,118 @@
+<div class="page-title">
+    <h1>Emergency Blood Request</h1>
+</div>
+
+<div class="container">
+    <div class="tabs">
+        <button class="tab-button" [class.active]="activeTab === 'my'" (click)="setActiveTab('my')">
+            <i class="fas fa-hospital"></i> My Requests
+            <span class="request-count">{{ myRequests.length }}</span>
+        </button>
+        <button class="tab-button" [class.active]="activeTab === 'other'" (click)="setActiveTab('other')">
+            <i class="fas fa-globe"></i> Other Requests
+            <span class="request-count">{{ otherRequests.length }}</span>
+        </button>
+    </div>
+
+    <div class="loading-spinner" *ngIf="loading">
+        <i class="fas fa-spinner fa-spin"></i> Loading requests...
+    </div>
+
+    <div class="requests-section" *ngIf="activeTab === 'my'">
+        <div class="section-header">
+            <h3>My Hospital's Requests</h3>
+            <p *ngIf="myRequests.length === 0" class="no-requests">
+                You haven't created any emergency requests yet.
+            </p>
+        </div>
+        <div class="request-grid">
+            <div class="request-card" *ngFor="let request of myRequests">
+                <div class="action-buttons" *ngIf="canEditRequest(request)">
+                    <button class="edit-button" (click)="editRequest(request)" title="Edit Request">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="delete-button" (click)="deleteRequest(request.id)" title="Delete Request">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+                <div class="urgency-badge" [ngClass]="request.urgencyLevel.toLowerCase()">
+                    {{ request.urgencyLevel }}
+                </div>
+                <div class="patient-image" *ngIf="request.imagePath">
+                    <img [src]="'http://localhost:8080' + request.imagePath" alt="Patient image">
+                </div>
+                <div class="request-details">
+                    <h3>{{ request.patientName }}</h3>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <i class="fas fa-tint"></i>
+                            <span>Blood Type: {{ request.bloodType }}</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-hospital"></i>
+                            <span>Hospital: {{ request.hospital }}</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-flask"></i>
+                            <span>Units Needed: {{ request.unitsNeeded }}</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-clock"></i>
+                            <span>Posted: {{ request.createdAt | date:'medium' }}</span>
+                        </div>
+                    </div>
+                    <p class="description">{{ request.description }}</p>
+                    <button class="contact-button" (click)="initiateCall(request.contactNumber)">
+                        <i class="fas fa-phone"></i>
+                        Contact: {{ request.contactNumber }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="requests-section" *ngIf="activeTab === 'other'">
+        <div class="section-header">
+            <h3>Other Hospital Requests</h3>
+            <p *ngIf="otherRequests.length === 0" class="no-requests">
+                No emergency requests from other hospitals.
+            </p>
+        </div>
+        <div class="request-grid">
+            <div class="request-card" *ngFor="let request of otherRequests">
+                <div class="urgency-badge" [ngClass]="request.urgencyLevel.toLowerCase()">
+                    {{ request.urgencyLevel }}
+                </div>
+                <div class="patient-image" *ngIf="request.imagePath">
+                    <img [src]="'http://localhost:8080' + request.imagePath" alt="Patient image">
+                </div>
+                <div class="request-details">
+                    <h3>{{ request.patientName }}</h3>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <i class="fas fa-tint"></i>
+                            <span>Blood Type: {{ request.bloodType }}</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-hospital"></i>
+                            <span>Hospital: {{ request.hospital }}</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-flask"></i>
+                            <span>Units Needed: {{ request.unitsNeeded }}</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-clock"></i>
+                            <span>Posted: {{ request.createdAt | date:'medium' }}</span>
+                        </div>
+                    </div>
+                    <p class="description">{{ request.description }}</p>
+                    <button class="contact-button" (click)="initiateCall(request.contactNumber)">
+                        <i class="fas fa-phone"></i>
+                        Contact: {{ request.contactNumber }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
