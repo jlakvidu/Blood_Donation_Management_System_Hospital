@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
@@ -19,6 +19,7 @@ export class HospitalSignUpComponent implements OnInit {
   private apiUrl = 'http://localhost:8080/hospital/add-hospital';
   selectedFile: File | null = null;
   imagePreview: string | null = null;
+  isScrolled = false;
 
   districts: string[] = [
     'Colombo', 'Gampaha', 'Kalutara', 'Kandy', 'Matale',
@@ -230,5 +231,10 @@ export class HospitalSignUpComponent implements OnInit {
         this.router.navigate(['/login']);
       }
     });
+  }
+
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    this.isScrolled = window.scrollY > 50;
   }
 }

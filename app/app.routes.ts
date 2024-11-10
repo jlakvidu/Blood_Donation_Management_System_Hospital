@@ -10,15 +10,16 @@ import { EmerganzyComponent } from './emerganzy/emerganzy.component';
 import { ViewEmerganzyBloodNeedComponent } from './view-emerganzy-blood-need/view-emerganzy-blood-need.component';
 import { ViewDonorsComponent } from './view-donors/view-donors.component';
 import { ReportsComponent } from './reports/reports.component';
+import { AuthGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
-    {
-        path: '',
-        component:HospitalSignInComponent
-    },
+    {   path: '',
+        redirectTo: '/login',
+        pathMatch: 'full' },
     {
         path: 'hospital-dashboard',
-        component: HospitalDashboardComponent
+        component: HospitalDashboardComponent,
+        canActivate: [AuthGuard]
     },
     {
         path:'login',
@@ -26,7 +27,8 @@ export const routes: Routes = [
     },
     {
         path: 'hospital-profile',
-        component: HospitalProfileComponent
+        component: HospitalProfileComponent,
+        canActivate: [AuthGuard]
     },
     {
         path:'hospital-sign-up',
@@ -34,31 +36,38 @@ export const routes: Routes = [
     },
     {
         path: 'view-appointments',
-        component: ViewAppointmentsComponent
+        component: ViewAppointmentsComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'campaigns',
-        component: CampaignsComponent
+        component: CampaignsComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'view-campaigns',
-        component: ViewCampaignsComponent
+        component: ViewCampaignsComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'emerganzy',
-        component: EmerganzyComponent
+        component: EmerganzyComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'view-emergency',
-        component: ViewEmerganzyBloodNeedComponent
+        component: ViewEmerganzyBloodNeedComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'view-donors',
-        component: ViewDonorsComponent
+        component: ViewDonorsComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'reports',
-        component: ReportsComponent
+        component: ReportsComponent,
+        canActivate: [AuthGuard]
     }
     
 ];

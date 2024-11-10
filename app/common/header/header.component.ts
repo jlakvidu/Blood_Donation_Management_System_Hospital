@@ -31,6 +31,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   staffMembers = 15;
   private profileImageListener: any;
   private profileSubscription: any;
+  shouldShowHeader = false;
 
   constructor(
     private http: HttpClient,
@@ -41,9 +42,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.loadHospitalProfile();
     };
     window.addEventListener('profileImageUpdated', this.profileImageListener);
+    window.addEventListener('storage', this.checkAuthStatus.bind(this));
   }
 
   ngOnInit(): void {
+    this.checkAuthStatus();
     const emailAddress = localStorage.getItem('hospitalEmailAddress');
     if (emailAddress) {
       this.hospitalProfileService.loadHospitalProfile(emailAddress);
@@ -62,6 +65,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.profileSubscription.unsubscribe();
     }
     window.removeEventListener('profileImageUpdated', this.profileImageListener);
+    window.removeEventListener('storage', this.checkAuthStatus.bind(this));
   }
 
   private loadHospitalProfile(): void {
@@ -137,5 +141,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
         }
       }
     });
+  }
+
+  private checkAuthStatus(): void {
+    this.shouldShowHeader = localStorage.getItem('isHospitalLoggedIn') === 'true';
   }
 }

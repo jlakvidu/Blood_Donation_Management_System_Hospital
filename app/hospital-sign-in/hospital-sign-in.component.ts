@@ -41,6 +41,10 @@ export class HospitalSignInComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    if (localStorage.getItem('isHospitalLoggedIn') === 'true') {
+      this.router.navigate(['/hospital-dashboard']);
+    }
+
     this.loginForm = this.fb.group({
       emailAddress: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
@@ -89,15 +93,9 @@ export class HospitalSignInComponent implements OnInit {
 
             this.hospitalProfileService.loadHospitalProfile(loginRequest.emailAddress);
 
-            Swal.fire({
-              icon: 'success',
-              title: 'Login Successful!',
-              text: 'Welcome to the Blood Bank Management System',
-              timer: 1500,
-              showConfirmButton: false
-            }).then(() => {
-              this.router.navigate(['/hospital-dashboard']);
-            });
+            window.dispatchEvent(new Event('storage'));
+            
+            this.router.navigate(['/hospital-dashboard']);
           } else {
             Swal.fire({
               icon: 'error',

@@ -1,5 +1,5 @@
 :root {
-  --primary-color: #2c3e50;
+  --primary-color: #ff1744;
   --secondary-color: #e74c3c;
   --text-color: #333;
   --sidebar-width: 300px;
@@ -20,7 +20,7 @@
   justify-content: space-between;
   padding: 0 20px;
   height: var(--header-height);
-  background: var(--primary-color);
+  background: #ff1744;
   color: white;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   position: fixed;
@@ -364,5 +364,47 @@
   .hospital-avatar {
     width: 32px;
     height: 32px;
+  }
+}
+
+.mobile-nav-links {
+  display: none;
+  padding: 20px 0;
+  border-top: 1px solid #eee;
+}
+
+.mobile-nav-item {
+  display: flex;
+  align-items: center;
+  padding: 15px 20px;
+  color: #2c3e50;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border-left: 4px solid transparent;
+}
+
+.mobile-nav-item:hover {
+  background-color: rgba(231, 76, 60, 0.05);
+  color: #e74c3c;
+}
+
+.mobile-nav-item i {
+  margin-right: 15px;
+  font-size: 1.2rem;
+  width: 20px;
+  text-align: center;
+}
+
+@media (max-width: 1024px) {
+  .nav-links {
+    display: none;
+  }
+  
+  .mobile-nav-links {
+    display: block;
+  }
+  
+  .logo h1 {
+    font-size: 1.2rem;
   }
 }
