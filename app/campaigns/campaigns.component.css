@@ -2,12 +2,14 @@
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
+    margin-top: 90px;
 }
 
 h2 {
     text-align: center;
     color: #333;
     margin-bottom: 30px;
+    padding-top: 20px;
 }
 
 .form-container {

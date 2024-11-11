@@ -88,14 +88,19 @@ export class HospitalSignInComponent implements OnInit {
           console.log('Login response:', response);
 
           if (response === "Login successful") {
-            localStorage.setItem('hospitalEmailAddress', loginRequest.emailAddress);
-            localStorage.setItem('isHospitalLoggedIn', 'true');
-
-            this.hospitalProfileService.loadHospitalProfile(loginRequest.emailAddress);
-
-            window.dispatchEvent(new Event('storage'));
-            
-            this.router.navigate(['/hospital-dashboard']);
+            Swal.fire({
+              icon: 'success',
+              title: 'Login Successful',
+              text: 'Welcome back!',
+              timer: 1500,
+              showConfirmButton: false
+            }).then(() => {
+              localStorage.setItem('hospitalEmailAddress', loginRequest.emailAddress);
+              localStorage.setItem('isHospitalLoggedIn', 'true');
+              this.hospitalProfileService.loadHospitalProfile(loginRequest.emailAddress);
+              window.dispatchEvent(new Event('storage'));
+              this.router.navigate(['/hospital-dashboard']);
+            });
           } else {
             Swal.fire({
               icon: 'error',
@@ -121,7 +126,8 @@ export class HospitalSignInComponent implements OnInit {
           Swal.fire({
             icon: 'error',
             title: 'Login Failed',
-            text: errorMessage
+            text: errorMessage,
+            confirmButtonColor: '#e41e31'
           });
 
           this.loginForm.patchValue({

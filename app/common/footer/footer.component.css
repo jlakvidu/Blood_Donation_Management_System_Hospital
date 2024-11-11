@@ -1,6 +1,7 @@
 .footer {
     position: relative;
-    background: linear-gradient(to right, #dc3545, #ff4d4d);
+    background: linear-gradient(135deg, rgba(255, 0, 51, 0.8) 0%, rgba(255, 68, 0, 0.8) 100%);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     color: #fff;
     padding: 40px 0 20px;
     overflow: hidden;
