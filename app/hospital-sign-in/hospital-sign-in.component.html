@@ -54,19 +54,34 @@
         <button class="close-btn" (click)="toggleForgotPassword($event)">&times;</button>
       </div>
 
+      <div class="progress-steps">
+        <div class="step" [class.active]="!showOTPInput && !showNewPassword"></div>
+        <div class="step" [class.active]="showOTPInput"></div>
+        <div class="step" [class.active]="showNewPassword"></div>
+      </div>
+
       <div class="modal-body" *ngIf="!showOTPInput && !showNewPassword">
         <div class="form-group">
           <div class="input-group">
-            <i class="fas fa-envelope input-icon"></i>
-            <input type="email" [(ngModel)]="resetEmail" placeholder="Enter your email" class="form-control">
+            <input type="email" 
+                   [(ngModel)]="resetEmail" 
+                   placeholder="Enter your email" 
+                   class="form-control"
+                   [disabled]="isLoading">
           </div>
         </div>
-        <button class="login-btn" (click)="requestPasswordReset()">
-          <span *ngIf="!isLoading">Send OTP</span>
-          <div class="spinner" *ngIf="isLoading">
-            <div class="bounce1"></div>
-            <div class="bounce2"></div>
-            <div class="bounce3"></div>
+        <button class="login-btn" 
+                (click)="requestPasswordReset()" 
+                [disabled]="isLoading"
+                [class.loading]="isLoading">
+          <ng-container *ngIf="!isLoading">
+            Send OTP
+          </ng-container>
+          <div class="loading-dots" *ngIf="isLoading">
+            <span>Sending</span>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
           </div>
         </button>
       </div>
@@ -74,7 +89,6 @@
       <div class="modal-body" *ngIf="showOTPInput">
         <div class="form-group">
           <div class="input-group">
-            <i class="fas fa-key input-icon"></i>
             <input type="text" [(ngModel)]="otp" placeholder="Enter OTP" class="form-control">
           </div>
         </div>
@@ -84,10 +98,7 @@
       <div class="modal-body" *ngIf="showNewPassword">
         <div class="form-group">
           <div class="input-group">
-            <i class="fas fa-lock input-icon"></i>
-            <input type="password" [(ngModel)]="newPassword" placeholder="Enter new password" class="form-control">
-            <i class="fas password-toggle" [class.fa-eye]="!showPassword" [class.fa-eye-slash]="showPassword"
-              (click)="togglePasswordVisibility()"></i>
+            <input [type]="showPassword ? 'text' : 'password'" [(ngModel)]="newPassword" placeholder="Enter new password" class="form-control">
           </div>
         </div>
         <button class="login-btn" (click)="resetPassword()">Reset Password</button>

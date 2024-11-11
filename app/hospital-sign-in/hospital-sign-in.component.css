@@ -155,14 +155,12 @@
   font-weight: 500;
 }
 
-/* Error messages */
 .error-message {
   color: #ff1493;
   font-size: 0.875rem;
   margin-top: 0.5rem;
 }
 
-/* Forgot password modal */
 .forgot-password-overlay {
   position: fixed;
   top: 0;
@@ -174,27 +172,32 @@
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  backdrop-filter: blur(5px);
 }
 
 .forgot-password-modal {
-  background: rgba(255, 192, 203, 0.95);
-  backdrop-filter: blur(10px);
-  padding: 2rem;
-  border-radius: 20px;
+  background: white;
+  border-radius: 16px;
   width: 90%;
-  max-width: 400px;
+  max-width: 450px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
   animation: modalFadeIn 0.3s ease-out;
+  position: relative;
+  overflow: hidden;
 }
 
 .modal-header {
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid #eee;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1.5rem;
 }
 
 .modal-header h3 {
-  color: #000;
+  color: #333;
+  font-size: 1.5rem;
+  font-weight: 600;
   margin: 0;
 }
 
@@ -202,51 +205,103 @@
   background: none;
   border: none;
   font-size: 24px;
-  color: #000;
+  color: #666;
   cursor: pointer;
+  transition: color 0.3s ease;
+  padding: 0.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Animations */
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.close-btn:hover {
+  color: #e41e31;
+  background: rgba(228, 30, 49, 0.1);
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
+.modal-body {
+  padding: 2rem;
 }
 
-@keyframes modalFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
+.modal-body .form-group {
+  margin-bottom: 1.5rem;
+}
 
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.modal-body .input-group {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.modal-body input {
+  width: 100%;
+  padding: 1rem 1.2rem;
+  border: 2px solid #eee;
+  border-radius: 12px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background: #f8f9fa;
+}
+
+.modal-body input:focus {
+  border-color: #e41e31;
+  background: white;
+  box-shadow: 0 0 0 4px rgba(228, 30, 49, 0.1);
+  outline: none;
+}
+
+.modal-body .login-btn {
+  width: 100%;
+  padding: 1rem;
+  background: linear-gradient(135deg, #e41e31, #ff4b6a);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+}
+
+.modal-body .login-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(228, 30, 49, 0.3);
+}
+
+.modal-body .login-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.progress-steps {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+  padding: 0 1rem;
+}
+
+.step {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #eee;
+  margin: 0 4px;
+  transition: all 0.3s ease;
+}
+
+.step.active {
+  background: #e41e31;
+  transform: scale(1.2);
 }
 
 @media (max-width: 768px) {
-  .login-container {
-    padding: 1rem;
+  .forgot-password-modal {
+    width: 95%;
+    margin: 1rem;
   }
-
-  .login-form-section {
+  
+  .modal-body {
     padding: 1.5rem;
   }
 }
@@ -368,4 +423,49 @@
       glow 2s ease-in-out infinite alternate,
       slideBackAndForth 2s ease-in-out infinite;
   }
+}
+
+.loading-dots {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 24px;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  background-color: white;
+  border-radius: 50%;
+  animation: dotPulse 1.5s infinite;
+}
+
+.dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes dotPulse {
+  0%, 100% {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+}
+
+.login-btn.loading {
+  position: relative;
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+
+.login-btn.loading:hover {
+  transform: none;
+  box-shadow: none;
 }

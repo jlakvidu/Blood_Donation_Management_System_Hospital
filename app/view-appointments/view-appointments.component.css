@@ -3,12 +3,50 @@
   max-width: 1200px;
   margin: 0 auto;
   margin-top: 90px;
+  background: linear-gradient(120deg, #fff5f5, #fff0f0, #fff8f8);
+  animation: gradientShift 15s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 h2 {
-  color: #333;
+  text-align: center;
+  color: #e53935;
   margin-bottom: 20px;
   padding-top: 20px;
+  font-weight: 800;
+  font-size: 2.5em;
+  width: 100%;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 3px 3px 6px rgba(229, 57, 53, 0.3),
+               -1px -1px 0 rgba(255, 255, 255, 0.5);
+  animation: slideIn 0.8s ease-out,
+            glowText 2s ease-in-out infinite,
+            floatText 3s ease-in-out infinite;
+}
+
+@keyframes glowText {
+  0% { text-shadow: 3px 3px 6px rgba(229, 57, 53, 0.3),
+                    -1px -1px 0 rgba(255, 255, 255, 0.5); }
+  50% { text-shadow: 3px 3px 15px rgba(229, 57, 53, 0.5),
+                     -1px -1px 0 rgba(255, 255, 255, 0.8); }
+  100% { text-shadow: 3px 3px 6px rgba(229, 57, 53, 0.3),
+                    -1px -1px 0 rgba(255, 255, 255, 0.5); }
+}
+
+@keyframes floatText {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+@keyframes slideIn {
+  from { transform: translateY(-20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
 }
 
 .loading-spinner {
@@ -24,7 +62,7 @@ h2 {
   border: 4px solid #f3f3f3;
   border-top: 4px solid #e74c3c;
   border-radius: 50%;
-  animation: spin 1s linear infinite;
+  animation: spin 1s linear infinite, glow 2s ease-in-out infinite;
 }
 
 @keyframes spin {
@@ -32,12 +70,30 @@ h2 {
   100% { transform: rotate(360deg); }
 }
 
+@keyframes glow {
+  0% { box-shadow: 0 0 5px rgba(231, 76, 60, 0.5); }
+  50% { box-shadow: 0 0 20px rgba(231, 76, 60, 0.8); }
+  100% { box-shadow: 0 0 5px rgba(231, 76, 60, 0.5); }
+}
+
 .appointment-card {
   background: white;
   border-radius: 8px;
   padding: 20px;
   margin-bottom: 20px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.appointment-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 20px rgba(231, 76, 60, 0.15);
 }
 
 .appointment-header {
@@ -52,21 +108,31 @@ h2 {
   border-radius: 20px;
   font-size: 14px;
   font-weight: 500;
+  transition: all 0.3s ease;
 }
 
 .pending {
-  background-color: #ffeeba;
+  background-color: #fff3cd;
   color: #856404;
+  animation: pulse 2s infinite;
 }
 
 .confirmed {
   background-color: #d4edda;
   color: #155724;
+  animation: pulse 2s infinite;
 }
 
 .cancelled {
-  background-color: #f8d7da;
-  color: #721c24;
+  background-color: #ffe6e6;
+  color: #dc3545;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
 }
 
 .appointment-details {
@@ -95,52 +161,80 @@ h2 {
 button {
   padding: 8px 16px;
   border: none;
-  border-radius: 4px;
+  border-radius: 25px;
   cursor: pointer;
   display: flex;
   align-items: center;
   gap: 6px;
   font-weight: 500;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
 
 .confirm-btn {
-  background-color: #28a745;
+  background: linear-gradient(45deg, #2ecc71, #27ae60);
   color: white;
 }
 
 .cancel-btn {
-  background-color: #dc3545;
+  background: linear-gradient(45deg, #e74c3c, #c0392b);
   color: white;
 }
 
-button:hover {
-  opacity: 0.9;
+.delete-btn {
+  background: linear-gradient(45deg, #95a5a6, #7f8c8d);
+  color: white;
+}
+
+button:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.3), transparent);
+  transition: 0.5s;
+}
+
+button:hover:before {
+  left: 100%;
 }
 
 .no-appointments {
   text-align: center;
   padding: 40px;
   color: #666;
+  animation: fadeInUp 0.8s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .no-appointments i {
   font-size: 48px;
   color: #e74c3c;
   margin-bottom: 16px;
+  animation: bounce 2s infinite;
 }
 
-.delete-btn {
-  background-color: #6c757d;
-  color: white;
-}
-
-.appointment-actions {
-  display: flex;
-  gap: 10px;
-  justify-content: flex-end;
-}
-
-.delete-btn:hover {
-  background-color: #5a6268;
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-10px); }
+  60% { transform: translateY(-5px); }
 }
 

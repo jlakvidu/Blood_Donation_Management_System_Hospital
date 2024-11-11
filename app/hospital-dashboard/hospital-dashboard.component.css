@@ -6,15 +6,77 @@
 }
 
 h2.text-primary {
-    font-weight: 600;
-    color: #2c3e50 !important;
+    font-weight: 800;
+    color: #ff7043 !important;
     padding: 1rem 0;
     margin-bottom: 1.5rem;
     margin-top: 3rem;
+    font-size: 3em;
+    text-shadow: 3px 3px 6px rgba(255, 112, 67, 0.3),
+                 -1px -1px 0 rgba(255, 255, 255, 0.5);
+    animation: slideInRotate 0.8s ease-out,
+              glowPulse 2s ease-in-out infinite,
+              floatText 3s ease-in-out infinite;
+    transform-origin: left center;
 }
 
 h2 i {
     margin-right: 10px;
+    color: #ff7043;
+    animation: iconSpin 3s ease-in-out infinite;
+}
+
+@keyframes slideInRotate {
+    from {
+        transform: translateX(-50px) rotate(-10deg);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0) rotate(0deg);
+        opacity: 1;
+    }
+}
+
+@keyframes glowPulse {
+    0% {
+        text-shadow: 3px 3px 6px rgba(255, 112, 67, 0.3),
+                    -1px -1px 0 rgba(255, 255, 255, 0.5),
+                    0 0 20px rgba(255, 112, 67, 0);
+    }
+    50% {
+        text-shadow: 3px 3px 15px rgba(255, 112, 67, 0.5),
+                    -1px -1px 0 rgba(255, 255, 255, 0.8),
+                    0 0 40px rgba(255, 112, 67, 0.3);
+    }
+    100% {
+        text-shadow: 3px 3px 6px rgba(255, 112, 67, 0.3),
+                    -1px -1px 0 rgba(255, 255, 255, 0.5),
+                    0 0 20px rgba(255, 112, 67, 0);
+    }
+}
+
+@keyframes floatText {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-5px) rotate(2deg);
+    }
+}
+
+@keyframes iconSpin {
+    0% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(15deg);
+    }
+    75% {
+        transform: rotate(-15deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
 }
 
 .card {
